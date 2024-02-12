@@ -1,0 +1,12 @@
+.main-col {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+#recognized-kanji {
+  font-size: 6vmin;
+}

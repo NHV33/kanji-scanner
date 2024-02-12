@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Capture Example</title>
+</head>
+<body>
+  <h1>Camera Capture Example</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <button id="capture">Capture</button>
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture');
+
+    // Get access to the camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error('Error accessing the camera: ', error);
+      });
+
+    // Capture image
+    captureButton.addEventListener('click', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert the captured image to a data URL
+      const imageUrl = canvas.toDataURL('image/png');
+      console.log('Captured image URL:', imageUrl);
+
+      // Here you can send the image to your server, or perform any other action with it
+    });
+  </script>
+</body>
+</html>

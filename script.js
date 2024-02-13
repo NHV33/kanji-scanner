@@ -1,4 +1,4 @@
-const video = document.getElementById('camera-feed');
+const videoElement = document.getElementById('camera-feed');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const captureButton = document.getElementById('capture-button');
@@ -19,13 +19,49 @@ function turnElement(element_id, onOff) {
 }
 
 // Get access to the camera
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then((stream) => {
-    video.srcObject = stream;
-  })
-  .catch((error) => {
-    console.error('Error accessing the camera: ', error);
+// navigator.mediaDevices.getUserMedia({ video: true })
+//   .then((stream) => {
+//     video.srcObject = stream;
+//   })
+//   .catch((error) => {
+//     console.error('Error accessing the camera: ', error);
+//   });
+
+// Check if the browser supports the MediaDevices API
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  // Define constraints to request the rear camera
+  var constraints = {
+      video: {
+          facingMode: 'environment' // 'environment' value is used to request the rear camera
+      }
+  };
+
+  // Request access to the camera with the specified constraints
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(function(stream) {
+    // Success callback: stream contains the media stream from the camera
+    // You can assign this stream to a <video> element to display the camera feed
+    // var videoElement = document.getElementById('videoElement');
+    videoElement.srcObject = stream;
+    videoElement.play();
+
+    // Get information about the tracks in the stream
+    stream.getVideoTracks().forEach(function(track) {
+        // Check the constraints of each track to determine the camera used
+        const facingMode = track.getSettings().facingMode;
+        document.getElementById("camera-info").innerText = facingMode;
+        console.log('Camera used:', facingMode);
+    });
+  })  
+  .catch(function(error) {
+      // Error callback: handle errors when accessing the camera
+      console.error('Error accessing the camera:', error);
   });
+} else {
+  // Browser does not support getUserMedia
+  console.error('getUserMedia not supported in this browser');
+}
+
 
 // Capture image
 captureButton.addEventListener('click', () => {
@@ -35,7 +71,7 @@ captureButton.addEventListener('click', () => {
   turnElement("button-bar", "off");
 
   updateCanvasDimensions();
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
   // Convert the captured image to a data URL
   // const imageUrl = canvas.toDataURL('image/png');

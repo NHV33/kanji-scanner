@@ -6,12 +6,12 @@ const retakeButton = document.getElementById('retake-button');
 
 let captureImage = null;
 
-function updateCanvasDimensions(canvas) {
+function updateCanvasDimensions() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 
-updateCanvasDimensions(canvas);
+updateCanvasDimensions();
 
 // Get access to the camera
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -26,7 +26,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
 captureButton.addEventListener('click', () => {
   // canvas.width = video.videoWidth;
   // canvas.height = video.videoHeight;
-  updateCanvasDimensions(canvas);
+  updateCanvasDimensions();
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
   // Convert the captured image to a data URL
@@ -111,6 +111,8 @@ const bottomEdge = canvas.height;
 
 let prevX;
 let prevY;
+let x;
+let y;
 
 function calcBounds(x1, y1, x2, y2) {
 
@@ -178,23 +180,35 @@ function renderImage() {
 //   }
 // });
 
-// Function to handle click events on the canvas
-canvas.addEventListener('mousedown', function(event) {
-  updateCanvasDimensions(canvas);
+function updateMousePos(event, newTouch=false) {
   const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  prevX = x;
-  prevY = y;
+  x = event.clientX - rect.left;
+  y = event.clientY - rect.top;
+  if (newTouch) {
+    prevX = x;
+    prevY = y;
+  }
+}
+
+function updateTouchPos(event, newTouch=false) {
+  // Touch { identifier: 1815, target: canvas#canvas.full-screen, screenX: 880, screenY: 174, clientX: 712, clientY: 133, pageX: 712, pageY: 133, radiusX: 1, radiusY: 1 }
+  if (event.touches[0] === undefined) { return; }
+  const rect = canvas.getBoundingClientRect();
+  x = event.touches[0].clientX - rect.left;
+  y = event.touches[0].clientY - rect.top;
+  if (newTouch) {
+    prevX = x;
+    prevY = y;
+  }
+}
+
+function startTouchCanvas() {
+  updateCanvasDimensions();
   renderImage();
+}
 
-});
-
-canvas.addEventListener('mousemove', function(event) {
+function dragCanvas() {
   if (prevX === null || prevY === null) { return; }
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
 
   // context.fillStyle = "red";
   // context.fillRect(x,y,20,20);
@@ -207,13 +221,9 @@ canvas.addEventListener('mousemove', function(event) {
     drawBorder(context, prevX, prevY, x, y, strokeColor="#000000ff", borderColor="#ffffffcc");
   }
 
-});
+}
 
-canvas.addEventListener('mouseup', function(event) {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
+function endTouchCanvas() {
   const bounds = calcBounds(prevX, prevY, x, y);
   const boxWidth = bounds.right - bounds.left;
   const boxHeight = bounds.bottom - bounds.top;
@@ -226,9 +236,30 @@ canvas.addEventListener('mouseup', function(event) {
   }
   prevX = null;
   prevY = null;
-});
+
+}
+
+canvas.addEventListener('mousedown', function(event) { updateMousePos(event, newTouch=true); startTouchCanvas(); });
+canvas.addEventListener('mousemove', function(event) { updateMousePos(event); dragCanvas(); });
+canvas.addEventListener('mouseup',   function(event) { updateMousePos(event); endTouchCanvas(); });
+
+canvas.addEventListener('touchstart', function(event) { updateTouchPos(event, newTouch=true); startTouchCanvas(event); });
+canvas.addEventListener('touchmove',  function(event) { updateTouchPos(event); dragCanvas(event); });
+canvas.addEventListener('touchend',   function(event) { updateTouchPos(event); endTouchCanvas(event); });
 
 retakeButton.addEventListener('mouseup', () => {
   captureImage = null;
   clearCanvas();
 });
+
+// Prevent pull-to-refresh
+document.addEventListener('touchstart', function(e) {
+  if (e.touches.length > 1) {
+      e.preventDefault();
+  }
+}, { passive: false });
+
+// Prevent swipe-back
+window.onbeforeunload = function() {
+  window.history.forward();
+};

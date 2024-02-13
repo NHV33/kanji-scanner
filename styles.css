@@ -111,6 +111,13 @@ body {
   text-shadow: 1px 1px 1px black;
 }
 
+#retake-icon {
+  /* font-variant: normal;
+  text-shadow: 1px 1px 1px black; */
+  height: 70%;
+  width: 70%;
+}
+
 #retake-button {
   position: fixed;
   left: 20px;
@@ -127,6 +134,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
   user-select: none;
   z-index: 10;
 }

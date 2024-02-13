@@ -3,6 +3,7 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const captureButton = document.getElementById('capture-button');
 const retakeButton = document.getElementById('retake-button');
+const alertText = document.getElementById('alert-text');
 
 let captureImage = null;
 
@@ -17,6 +18,20 @@ function turnElement(element_id, onOff) {
   const visibilitySetting = (onOff.toLowerCase() === "on") ? "visible" : "hidden";
   document.getElementById(element_id).style.visibility = visibilitySetting;
 }
+
+const captureInstruction = "Take a picture of some kanji."
+const selectionInstruction = "Drag to select kanji."
+
+function updateAlertText(message) {
+  if (message === "") {
+    turnElement("alert-text", "off");
+  } else {
+    turnElement("alert-text", "on");
+    alertText.innerText = message;
+  }
+}
+
+updateAlertText(captureInstruction);
 
 // Get access to the camera
 // navigator.mediaDevices.getUserMedia({ video: true })
@@ -49,7 +64,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     stream.getVideoTracks().forEach(function(track) {
         // Check the constraints of each track to determine the camera used
         const facingMode = track.getSettings().facingMode;
-        document.getElementById("camera-info").innerText = facingMode;
+        // document.getElementById("camera-info").innerText = facingMode;
         console.log('Camera used:', facingMode);
     });
   })  
@@ -69,6 +84,7 @@ captureButton.addEventListener('click', () => {
   // canvas.height = video.videoHeight;
 
   turnElement("button-bar", "off");
+  updateAlertText(selectionInstruction);
 
   updateCanvasDimensions();
   canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
@@ -249,11 +265,13 @@ function updateTouchPos(event, newTouch=false) {
 }
 
 function startTouchCanvas() {
+  if (captureImage === null) { return; }
   updateCanvasDimensions();
   renderImage();
 }
 
 function dragCanvas() {
+  if (captureImage === null) { return; }
   if (prevX === null || prevY === null) { return; }
 
   // context.fillStyle = "red";
@@ -270,6 +288,10 @@ function dragCanvas() {
 }
 
 function endTouchCanvas() {
+  if (captureImage === null) { return; }
+  
+  updateAlertText("");
+
   const bounds = calcBounds(prevX, prevY, x, y);
   const boxWidth = bounds.right - bounds.left;
   const boxHeight = bounds.bottom - bounds.top;
@@ -297,6 +319,7 @@ retakeButton.addEventListener('mouseup', () => {
   captureImage = null;
   clearCanvas();
   turnElement("button-bar", "on");
+  updateAlertText(captureInstruction);
 });
 
 // Prevent pull-to-refresh

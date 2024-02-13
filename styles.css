@@ -23,6 +23,16 @@ body {
   /* background-color: black; */
 }
 
+#output-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: aliceblue;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 0 0 10px 0;
+}
+
 .full-screen {
   position: fixed;
   /* background-color: aquamarine; */
@@ -54,6 +64,34 @@ body {
   /* border: 10px solid purple; */
   /* visibility: hidden; */
   z-index: -5;
+}
+
+#alert-bar {
+  position: fixed;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 5vh;
+  /* background-color: aqua; */
+}
+
+#alert-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  /* height: 10vh; */
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  background-color: black;
+  border-radius: 100px;
+  padding: 10px 20px 10px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 5vh;
+  color: white;
+  opacity: 88%;
+  user-select: none;
 }
 
 #button-bar {

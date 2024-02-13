@@ -20,20 +20,22 @@
     <canvas id="canvas" class="full-screen" width="2000" height="480"></canvas>
     <div id="retake-button"><span>🔄&#xFE0E;</span></div>
     <div id="button-bar">
-      <!-- <div id="retake-button">🔄</div> -->
       <div id="button-border">
         <div id="capture-button"></div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: column;">
+    <div id="alert-bar">
+      <span id="alert-text">Take a picture of some kanji.</span>
+    </div>
+    <div id="output-box" style="display: flex; flex-direction: column;">
       <span class="recognized-kanji">
-        Recognized Kanji 1518:
-        <span id="recognized-kanji"></span>    
+        Recognized Text:
       </span>
-      <span class="recognized-kanji">
-        Camera:
-        <span id="camera-info"></span>    
-      </span>
+      <span class="recognized-kanji" id="recognized-kanji"></span>    
+      <!-- <span class="recognized-kanji"> -->
+        <!-- Camera: -->
+        <!-- <span id="camera-info"></span>     -->
+      <!-- </span> -->
     </div>
     <script src="script.js" async defer></script>
   </body>

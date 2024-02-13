@@ -92,6 +92,7 @@ function stripKanji(text) {
 
 const extractText = async () => {
   console.log('ocr scanning');
+  recognizedKanji.innerText = "attemping scan..."
   const worker = await Tesseract.createWorker('jpn');
   await worker.setParameters({
     // tessedit_char_whitelist: all_kanji,
@@ -105,7 +106,8 @@ const extractText = async () => {
   // const ret = await worker.recognize('https://tesseract.projectnaptha.com/captureImage/eng_bw.png');
   const ret = await worker.recognize(canvas.toDataURL("image/png"), "jpn");
   console.log(ret.data.text);
-  recognizedKanji.innerText = stripKanji(ret.data.text);
+  // recognizedKanji.innerText = stripKanji(ret.data.text);
+  recognizedKanji.innerText = ret.data.text;
   await worker.terminate();
 };
 

@@ -108,6 +108,7 @@ body {
 
 #retake-symbol {
   font-variant: normal;
+  text-shadow: 1px 1px 1px black;
 }
 
 #retake-button {

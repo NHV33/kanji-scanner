@@ -106,6 +106,10 @@ body {
   /* background-color: aqua; */
 }
 
+#retake-symbol {
+  font-variant: normal;
+}
+
 #retake-button {
   position: fixed;
   left: 20px;

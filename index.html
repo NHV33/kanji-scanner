@@ -7,11 +7,27 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <!-- v5 -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js' async defer></script>
   </head>
   <body>
-
-    <!-- v5 -->
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
-    <script src="scirpt.js" async defer></script>
+    <!-- <div id="screen-frame" class="full-screen">
+      <video id="camera-feed" width="1000" height="500" autoplay></video>
+      <canvas id="canvas" width="640" height="480"></canvas>  
+    </div> -->
+    <video id="camera-feed" class="full-screen" width="1000" height="500" autoplay></video>
+    <canvas id="canvas" class="full-screen" width="2000" height="480"></canvas>
+    <div id="button-bar">
+      <div id="retake-button"><span>🔄&#xFE0E;</span></div>
+      <!-- <div id="retake-button">🔄</div> -->
+      <div id="button-border">
+        <div id="capture-button"></div>
+      </div>
+    </div>
+    <span class="recognized-kanji">
+      Recognized Kanji:
+      <span id="recognized-kanji"></span>    
+    </span>
+    <script src="script.js" async defer></script>
   </body>
 </html>

@@ -2,16 +2,20 @@
 <html>
 <head>
   <title>Camera Capture Example</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Camera Capture Example</h1>
-  <video id="video" width="640" height="480" autoplay></video>
-  <button id="capture">Capture</button>
-  <canvas id="canvas" width="640" height="480"></canvas>
+  <video id="camera-feed" class="full-screen" width="1000" height="500" autoplay></video>
+  <canvas id="canvas" class="full-screen" width="640" height="480"></canvas>
+  <div id="button-bar">
+    <div id="button-border">
+      <div id="capture-button"></div>
+    </div>
+  </div>
   <script>
-    const video = document.getElementById('video');
+    const video = document.getElementById('camera-feed');
     const canvas = document.getElementById('canvas');
-    const captureButton = document.getElementById('capture');
+    const captureButton = document.getElementById('capture-button');
 
     // Get access to the camera
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -31,6 +35,9 @@
       // Convert the captured image to a data URL
       const imageUrl = canvas.toDataURL('image/png');
       console.log('Captured image URL:', imageUrl);
+
+      // Make Canvas Visible
+      canvas.style.visibility = "visible";
 
       // Here you can send the image to your server, or perform any other action with it
     });

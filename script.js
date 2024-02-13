@@ -13,6 +13,11 @@ function updateCanvasDimensions() {
 
 updateCanvasDimensions();
 
+function turnElement(element_id, onOff) {
+  const visibilitySetting = (onOff.toLowerCase() === "on") ? "visible" : "hidden";
+  document.getElementById(element_id).style.visibility = visibilitySetting;
+}
+
 // Get access to the camera
 navigator.mediaDevices.getUserMedia({ video: true })
   .then((stream) => {
@@ -26,6 +31,9 @@ navigator.mediaDevices.getUserMedia({ video: true })
 captureButton.addEventListener('click', () => {
   // canvas.width = video.videoWidth;
   // canvas.height = video.videoHeight;
+
+  turnElement("button-bar", "off");
+
   updateCanvasDimensions();
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
@@ -52,7 +60,7 @@ img.onload = function() {
 };
 
   // Make Canvas Visible
-  canvas.style.visibility = "visible";
+  // canvas.style.visibility = "visible";
 
   // Here you can send the image to your server, or perform any other action with it
 });
@@ -250,6 +258,7 @@ canvas.addEventListener('touchend',   function(event) { updateTouchPos(event); e
 retakeButton.addEventListener('mouseup', () => {
   captureImage = null;
   clearCanvas();
+  turnElement("button-bar", "on");
 });
 
 // Prevent pull-to-refresh

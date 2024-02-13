@@ -52,7 +52,7 @@ body {
   /* background-color: aquamarine; */
   /* border: 10px solid purple; */
   /* visibility: hidden; */
-  z-index: -1;
+  z-index: -5;
 }
 
 #button-bar {
@@ -69,6 +69,7 @@ body {
 #retake-button {
   position: fixed;
   left: 20px;
+  bottom: 10vh;
   color: white;
   font-size: min(calc(var(--button-size) * 0.5), 40px);
   width: var(--button-size);
@@ -82,6 +83,7 @@ body {
   justify-content: center;
   align-items: center;
   user-select: none;
+  z-index: 10;
 }
 
 #retake-button:active {

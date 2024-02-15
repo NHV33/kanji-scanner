@@ -14,9 +14,10 @@
   <body>
     <!-- <div id="screen-frame" class="full-screen">
       <video id="camera-feed" width="1000" height="500" autoplay></video>
-      <canvas id="canvas" width="640" height="480"></canvas>  
+      <canvas id="canvas" width="640" height="480"></canvas>
     </div> -->
-    <video id="camera-feed" class="full-screen" width="1000" height="500" autoplay></video>
+    <!-- <video id="camera-feed" class="full-screen" width="1000" height="500" autoplay></video> -->
+    <video id="camera-feed" class="full-screen" width="1000" height="500" autoPlay playsInline muted></video>
     <canvas id="canvas" class="full-screen" width="2000" height="480"></canvas>
     <!-- <div id="retake-button"><span id="retake-symbol">&#128260;&#xFE0E;</span></div> -->
     <div id="retake-button"><img id="retake-icon" src="assets/images/refresh_icon.svg" alt=""></div>
@@ -32,7 +33,7 @@
       <span class="recognized-kanji">
         Recognized Text:
       </span>
-      <span class="recognized-kanji" id="recognized-kanji"></span>    
+      <span class="recognized-kanji" id="recognized-kanji"></span>
       <!-- <span class="recognized-kanji"> -->
         <!-- Camera: -->
         <!-- <span id="camera-info"></span>     -->

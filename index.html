@@ -6,39 +6,35 @@
     <title>Kanji Scanner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta name="description" content="">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <link rel="stylesheet" href="styles.css">
-    <!-- v5 -->
+    <!-- Tesseract v5 via CDN-->
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js' async defer></script>
   </head>
   <body>
-    <!-- <div id="screen-frame" class="full-screen">
-      <video id="camera-feed" width="1000" height="500" autoplay></video>
-      <canvas id="canvas" width="640" height="480"></canvas>
-    </div> -->
-    <!-- <video id="camera-feed" class="full-screen" width="1000" height="500" autoplay></video> -->
+
+    <!-- autoPlay playsInline muted <== these attrs must be present for iOS compatibility -->
     <video id="camera-feed" class="full-screen" width="1000" height="500" autoPlay playsInline muted></video>
     <canvas id="canvas" class="full-screen" width="2000" height="480"></canvas>
-    <!-- <div id="retake-button"><span id="retake-symbol">&#128260;&#xFE0E;</span></div> -->
+
     <div id="retake-button"><img id="retake-icon" src="assets/images/refresh_icon.svg" alt=""></div>
+
     <div id="button-bar">
       <div id="button-border">
         <div id="capture-button"></div>
       </div>
     </div>
+
     <div id="alert-bar">
       <span id="alert-text">Take a picture of some kanji.</span>
     </div>
+
     <div id="output-box" style="display: flex; flex-direction: column;">
       <span class="recognized-kanji">
         Recognized Text:
       </span>
       <span class="recognized-kanji" id="recognized-kanji"></span>
-      <!-- <span class="recognized-kanji"> -->
-        <!-- Camera: -->
-        <!-- <span id="camera-info"></span>     -->
-      <!-- </span> -->
     </div>
+
     <script src="script.js" async defer></script>
   </body>
 </html>
